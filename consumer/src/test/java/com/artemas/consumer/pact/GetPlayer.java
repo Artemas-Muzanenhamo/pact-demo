@@ -32,7 +32,7 @@ class GetPlayer {
     @Pact(provider = "provider", consumer = "consumer")
     public RequestResponsePact createPact(PactDslWithProvider builder) {
         return builder
-                .uponReceiving("ExampleJavaConsumerPactTest test interaction")
+                .uponReceiving("A Request to get an NBA player's information given the player id")
                     .path("/player")
                     .query(format("id=%s", PLAYER_ID))
                     .method("GET")

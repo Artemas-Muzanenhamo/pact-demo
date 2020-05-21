@@ -7,6 +7,57 @@
   },
   "interactions": [
     {
+      "description": "A Request to get an NBA player's information given the player id",
+      "request": {
+        "method": "GET",
+        "path": "/player",
+        "query": {
+          "id": [
+            "1234"
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        "body": {
+          "playerSurname": "Bryant",
+          "playerName": "Kobe",
+          "id": 1234
+        },
+        "matchingRules": {
+          "body": {
+            "$.id": {
+              "matchers": [
+                {
+                  "match": "number"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.playerName": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.playerSurname": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      }
+    },
+    {
       "description": "ExampleJavaConsumerPactTest test interaction",
       "request": {
         "method": "GET",
