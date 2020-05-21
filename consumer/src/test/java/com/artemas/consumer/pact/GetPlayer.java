@@ -1,5 +1,6 @@
 package com.artemas.consumer.pact;
 
+import au.com.dius.pact.consumer.MockServer;
 import au.com.dius.pact.consumer.dsl.DslPart;
 import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
@@ -9,13 +10,19 @@ import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
 import au.com.dius.pact.core.model.annotations.PactFolder;
 import com.google.common.collect.ImmutableMap;
+import org.apache.http.HttpResponse;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.io.IOException;
+
 import static java.lang.String.format;
+import static org.apache.http.client.fluent.Request.Get;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.HttpStatus.OK;
 
-@PactFolder("pacts")
+@PactFolder("../pacts")
 @PactTestFor(providerName = "provider")
 @ExtendWith(PactConsumerTestExt.class)
 class GetPlayer {
@@ -34,6 +41,13 @@ class GetPlayer {
                     .status(OK.value())
                     .body(playerDetails())
                 .toPact();
+    }
+
+    @Test
+    void test(MockServer mockServer) throws IOException {
+        HttpResponse response = Get(mockServer.getUrl() + "/player?id=" + PLAYER_ID).execute().returnResponse();
+
+        assertThat(response.getStatusLine().getStatusCode()).isEqualTo(OK.value());
     }
 
     private DslPart playerDetails() {

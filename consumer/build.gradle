@@ -10,6 +10,7 @@ sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -18,6 +19,7 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     testImplementation 'au.com.dius.pact.consumer:junit5:4.1.0'
+    testImplementation 'io.rest-assured:rest-assured-parent:4.3.0'
 }
 
 test {
