@@ -10,17 +10,12 @@
       "description": "A Request to get an NBA player's information given the player id",
       "request": {
         "method": "GET",
-        "path": "/player",
-        "query": {
-          "id": [
-            "1234"
-          ]
-        }
+        "path": "/player/1234"
       },
       "response": {
         "status": 200,
         "headers": {
-          "Content-Type": "application/json;charset=UTF-8"
+          "Content-Type": "application/json"
         },
         "body": {
           "playerSurname": "Bryant",

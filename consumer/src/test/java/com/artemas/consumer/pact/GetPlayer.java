@@ -21,6 +21,7 @@ import static org.apache.http.client.fluent.Request.Get;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @PactFolder("../pacts")
 @PactTestFor(providerName = "provider")
@@ -33,11 +34,10 @@ class GetPlayer {
     public RequestResponsePact createPact(PactDslWithProvider builder) {
         return builder
                 .uponReceiving("A Request to get an NBA player's information given the player id")
-                    .path("/player")
-                    .query(format("id=%s", PLAYER_ID))
+                    .path(format("/player/%s", PLAYER_ID))
                     .method("GET")
                 .willRespondWith()
-                    .headers(ImmutableMap.of(CONTENT_TYPE, "application/json;charset=UTF-8"))
+                    .headers(ImmutableMap.of(CONTENT_TYPE, APPLICATION_JSON_VALUE))
                     .status(OK.value())
                     .body(playerDetails())
                 .toPact();
@@ -45,7 +45,7 @@ class GetPlayer {
 
     @Test
     void test(MockServer mockServer) throws IOException {
-        HttpResponse response = Get(mockServer.getUrl() + "/player?id=" + PLAYER_ID).execute().returnResponse();
+        HttpResponse response = Get(mockServer.getUrl() + format("/player/%s", PLAYER_ID)).execute().returnResponse();
 
         assertThat(response.getStatusLine().getStatusCode()).isEqualTo(OK.value());
     }
