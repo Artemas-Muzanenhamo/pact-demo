@@ -13,7 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @Provider("provider")
 @Consumer("consumer")
 @PactFolder("../pacts")
-class MockMvcTestTargetStandaloneMockMvcTestJava {
+class PlayerEndpointPactVerificationTest {
 
     @TestTemplate
     @ExtendWith(PactVerificationInvocationContextProvider.class)
